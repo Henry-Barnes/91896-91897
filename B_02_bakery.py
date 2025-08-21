@@ -63,18 +63,14 @@ def not_blank(question):
 def int_check(question, low, high):
     """Checks users enter an integer between two values / float that is more than zero (or the 'xxx' exit code)"""
 
-    error = f"Oops - please enter an integer between {low} and {high}."
+    error = f"Oops - please enter an whole number between {low} and {high}."
 
     while True:
-        response = input(question).lower()
-
-        # check for the exit code
-        if response == "xxx":
-            return response
+        response = input(question).strip()
 
         try:
             # change the response to an integer and check that it's more than zero
-            response = int(input(question))
+            response = int(response)
 
             if low <= response <= high:
                 return response
@@ -88,7 +84,7 @@ def int_check(question, low, high):
 # Main Routine goes here
 
 # Initialise ticket numbers
-MAX_SPEND = 8
+MAX_SPEND = 50
 
 # lists to hold ticket details
 all_menu = ["Croissant", "Bagel", "Muffin", "Donut", "Sourdough Loaf", "Cupcake"]
@@ -159,7 +155,7 @@ while budget <= MAX_SPEND:
             print(f"your new budget is: {budget} ")
 
         else:
-            print("You cannot afford this card. Please choose a different one.")
+            print("You cannot afford this item. Please choose a different one.")
             continue
 
         repurchase = string_check("Would you like to make another purchase? ")
@@ -167,7 +163,7 @@ while budget <= MAX_SPEND:
             break
 
         else:
-            print("Invalid number. Please choose between 1-10.")
+            print("Invalid number. Please choose between 1-6.")
             continue
 
     except ValueError:
