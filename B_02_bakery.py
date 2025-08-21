@@ -63,13 +63,14 @@ def not_blank(question):
 def int_check(question, low, high):
     """Checks users enter an integer between two values / float that is more than zero (or the 'xxx' exit code)"""
 
-    error = f"Oops - please enter an integer between {low} and {high}."
+    error = f"Oops - please enter an whole number between {low} and {high}."
 
     while True:
+        response = input(question).strip()
 
         try:
             # change the response to an integer and check that it's more than zero
-            response = int(input(question))
+            response = int(response)
 
             if low <= response <= high:
                 return response
@@ -87,15 +88,15 @@ MAX_SPEND = 50
 
 # lists to hold ticket details
 all_menu = ["Croissant", "Bagel", "Muffin", "Donut", "Sourdough Loaf", "Cupcake"]
-all_bakery_costs = [3.50, 4.00, 2.75, 2.50, 6.00, 3.00]
+all_item_costs = [4.50, 5.50, 4.00, 3.50, 8.00, 3.00]
 
-bakery_dict = {
-    'Name': all_menu,
-    'Item Price': all_bakery_costs,
+bakery_item_dict = {
+    'Item Name': all_menu,
+    'Ticket Price': all_item_costs,
 }
 
 # create dataframe / table from dictionary
-bakery_frame = pandas.DataFrame(bakery_dict)
+bakery_frame = pandas.DataFrame(bakery_item_dict)
 
 # Rearranging index
 bakery_frame.index = numpy.arange(1, len(bakery_frame) + 1)
@@ -112,10 +113,6 @@ if want_instructions == "yes":
     instructions()
 
 print()
-
-# Ask user for their name
-name = not_blank(f"What is your name? ")
-
 
 # Ask for their budget and check it's between 3 and 50
 budget = int_check("Budget: ", 3, 50)
@@ -144,7 +141,7 @@ while budget <= MAX_SPEND:
         choice = int_check("Enter the number of the item you would like to choose: ", 1, 6)
 
         selected_row = all_menu[choice - 1]
-        item_price = all_bakery_costs[choice - 1]
+        item_price = all_item_costs[choice - 1]
 
         if budget >= item_price:
             budget -= item_price
@@ -155,7 +152,7 @@ while budget <= MAX_SPEND:
             # display user selection
             print(f"You selected: {selected_row} ${item_price}")
 
-            print(f"your new budget is: ${budget} ")
+            print(f"your new budget is: {budget} ")
 
         else:
             print("You cannot afford this item. Please choose a different one.")
@@ -172,5 +169,3 @@ while budget <= MAX_SPEND:
     except ValueError:
         print("Please enter a valid number.")
 # End of Ticket Loop
-
-# Receipt and Summary
